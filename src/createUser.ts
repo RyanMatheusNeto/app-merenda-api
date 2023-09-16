@@ -1,18 +1,22 @@
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 
-import { connectToMongoDB } from './config/db'
-import { UserModel } from './models/UserModel'
-import { createUserObject } from './utils/security'
+import { connectToMongoDB } from "./config/db";
+import { UserModel } from "./models/UserModel";
+import { createUserObject } from "./utils/security";
 
-dotenv.config()
+dotenv.config();
 
 connectToMongoDB().then(async () => {
   const user = createUserObject(
-    'sidney.sousa@ifms.edu.br',
-    'Sidney Sousa',
-    'admin123aiquefome'
-  )
+    "camila.ribeiro@ifms.edu.br",
+    "Sidney Sousa",
+    "admin123aiquefome"
+  );
 
-  const savedObj = await UserModel.create(user)
-  console.log(savedObj)
-})
+  const user2 = createUserObject("admin", "admin", "admin");
+
+  const savedObj = await UserModel.create(user);
+  const savedObj2 = await UserModel.create(user2);
+  console.log(savedObj);
+  console.log(savedObj2);
+});
