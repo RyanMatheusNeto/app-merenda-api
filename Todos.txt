@@ -1,0 +1,3 @@
+- organizar a tipagem em locais adequados
+- terminar a limpeza para remover o admin
+- remover hash e salt do retorno do login
