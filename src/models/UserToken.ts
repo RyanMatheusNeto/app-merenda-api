@@ -1,11 +1,11 @@
-import { Document, Schema, model } from 'mongoose'
+import { Document, Schema, model } from "mongoose";
 
 export interface UserToken extends Document {
-  deviceToken: string
+  deviceToken: string;
 }
 
 const schema = new Schema<UserToken>({
   deviceToken: { type: String, required: true, unique: true },
-})
+});
 
-export const UserTokenModel = model('UserToken', schema)
+export const UserTokenModel = model("UserToken", schema);

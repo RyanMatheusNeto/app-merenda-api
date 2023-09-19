@@ -2,9 +2,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-import { app } from "./app";
 import { connection } from "mongoose";
-import { User } from "./models/UserModel";
+import { app } from "./app";
 
 const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, () =>

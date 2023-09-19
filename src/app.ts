@@ -1,15 +1,11 @@
-import express from "express";
-import logger from "morgan";
-// import session from 'express-session'
-import fileUpload from "express-fileupload";
 import cors from "cors";
+import express from "express";
+import fileUpload from "express-fileupload";
+import logger from "morgan";
 
 import { connectToMongoDB } from "./config/db";
-import { join } from "path";
-// import { viewsRouter } from './routes/views'
-import { snacksRouter } from "./routes/snacks";
 import { apiRouter } from "./routes/api";
-// import MongoStore from "connect-mongo";
+import { snacksRouter } from "./routes/snacks";
 
 connectToMongoDB();
 

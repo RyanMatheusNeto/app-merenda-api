@@ -9,7 +9,7 @@ dotenv.config();
 connectToMongoDB().then(async () => {
   const user = createUserObject(
     "camila.ribeiro@ifms.edu.br",
-    "Sidney Sousa",
+    "Camila Ribeiro",
     "admin123aiquefome"
   );
 
