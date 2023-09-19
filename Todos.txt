@@ -1,3 +1,8 @@
-- organizar a tipagem em locais adequados
-- terminar a limpeza para remover o admin
-- remover hash e salt do retorno do login
+- organizar a tipagem em locais adequados (nathan)
+- terminar a limpeza para remover o admin (rafael) (in progress)
+- remover hash e salt do retorno do login (ryan)
+
+------------------------------------------------------
+- criar documentação postman de todos os endpoints atuais (rafael) (in progress)
+- criar testes automatizados ()
+- extrair endpoints da rota api para rotas apropriadas ()
