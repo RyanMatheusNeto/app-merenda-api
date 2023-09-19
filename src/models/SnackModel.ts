@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-
+import {SnackMessages} from "../types/snack"
 export interface Snack {
   title: string;
   offerDate: Date;
@@ -17,11 +17,6 @@ const schema = new Schema<Snack>({
 });
 
 export const SnackModel = model("Snack", schema);
-
-enum SnackMessages {
-  INVALID_TITLE = "O título deve conter ao menos 5 caracteres",
-  INVALID_DESCRIPTION = "A descrição deve conter ao menos 5 caracteres",
-}
 
 export const validateSnackInputs = (snackObj: any) => {
   const { title, description } = snackObj;

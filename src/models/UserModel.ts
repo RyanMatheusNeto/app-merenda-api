@@ -1,5 +1,6 @@
 import EmailValidator from "email-validator";
 import { Document, Schema, model } from "mongoose";
+import {UserMessages} from "../types/user"
 
 export interface User extends Document {
   login: string;
@@ -16,12 +17,6 @@ const schema = new Schema<User>({
 });
 
 export const UserModel = model("User", schema);
-
-enum UserMessages {
-  INVALID_EMAIL = "E-mail inválido",
-  INVALID_NAME = "O nome precisa conter ao menos 3 caracteres",
-  INVALID_PASSWORD = "A senha precisa conter ao menos 8 caracteres, 1 caractere maiúsculo e 1 dígito",
-}
 
 export const validateUserInputs = (userObj: any): string[] => {
   const errorMessages: string[] = [];
