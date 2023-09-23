@@ -1,8 +1,40 @@
+cadastro de Merenda e avaliação
+---------------------------------------------------------
+1 - refatorar listagem de merendas (retornar json) (Nathan)
+2 - cadastro da merenda (Unificar envio de foto junto com demais infos) (foto opcional) (Rafael)
+3 - estudante avaliar merenda (ao menos 1 estrela) (descrição opcional) (avaliar apenas uma vez) (José)
+4 - rota para verificar se estudante já avaliou (usar email para validar estudante) (Ryan)
+5 - informações sobre as avaliações feitas (média das avaliações) (quantitativo das avaliações) (Murilo)
+
+0 - pegar key do firebase
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Um dia nós faz!
 - organizar a tipagem em locais adequados (nathan)
 - terminar a limpeza para remover o admin (rafael) (in progress)
 - remover hash e salt do retorno do login (ryan)
 
 ------------------------------------------------------
-- criar documentação postman de todos os endpoints atuais (rafael) (in progress)
+- criar documentação swagger de todos os endpoints atuais (rafael) (in progress)
 - criar testes automatizados ()
 - extrair endpoints da rota api para rotas apropriadas ()
+
+
+
