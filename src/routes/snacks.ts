@@ -23,11 +23,22 @@ snacksRouter.post("/thumb/upload", loginCtrl.verifyToken, async (req, res) => {
   const metadata = {
     contentType: thumb.mimetype,
   };
+
   const result = await uploadBytes(storageRef, fileContent, metadata);
   console.log(`File upload result: ${result}`);
 });
 
-snacksRouter.post("/new_snack", loginCtrl.verifyToken, async (req, res) => {
+snacksRouter.post("/files", (req, res) => {
+  const files = req.files;
+  const body = req.body;
+
+  console.log("files: ", files);
+  console.log("body: ", body);
+
+  return res.json("deu certo");
+});
+
+snacksRouter.post("/snack", loginCtrl.verifyToken, async (req, res) => {
   const errorMessages = validateSnackInputs(req.body);
 
   if (errorMessages.length === 0) {
@@ -41,7 +52,7 @@ snacksRouter.post("/new_snack", loginCtrl.verifyToken, async (req, res) => {
     } catch (err) {}
     await snackCtrl.save(snack);
 
-    sendPushNotificationToAll("Eba! Saiu o cardápio de hoje!", description);
+    // sendPushNotificationToAll("Eba! Saiu o cardápio de hoje!", description);
 
     return res.render("new_snack", {
       successMessage: "Merenda do dia salva!",
