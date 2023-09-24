@@ -13,16 +13,18 @@ export class SnackController {
   async save(snack: Snack, thumbUpload: UploadFileObject) {
     const snackOfTheDay = await this.findSnackOfTheDay();
 
-    const thumbURL = await this._fileStorage.uploadSnackThumb(thumbUpload);
+    const uploadedThumbURL = await this._fileStorage.uploadSnackThumb(
+      thumbUpload
+    );
 
-    snack.thumbURL = thumbURL;
+    snack.thumbURL = uploadedThumbURL;
 
-    if (snackOfTheDay && !thumbURL) {
+    if (snackOfTheDay && !uploadedThumbURL && snackOfTheDay.thumbURL) {
       await this._fileStorage.deleteTodaySnackThumb();
     }
 
     if (snackOfTheDay) {
-      const { title, description, thumbURL } = snack;
+      const { title, description, thumbURL: uploadedThumbURL } = snack;
 
       const updatedSnack = await SnackModel.findOneAndReplace(
         {
@@ -35,13 +37,13 @@ export class SnackController {
         }
       );
 
-      updatedSnack.thumbURL = thumbURL;
+      updatedSnack.thumbURL = uploadedThumbURL;
 
       return {
         ...snackOfTheDay.toJSON(),
         title,
         description,
-        thumbURL,
+        thumbURL: uploadedThumbURL,
       };
     }
 

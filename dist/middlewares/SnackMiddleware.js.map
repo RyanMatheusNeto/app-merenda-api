@@ -1,0 +1,1 @@
+{"version":3,"file":"SnackMiddleware.js","sourceRoot":"","sources":["../../src/middlewares/SnackMiddleware.ts"],"names":[],"mappings":";;AAEA,MAAqB,eAAe;IAClC,uBAAuB,CAAC,GAAY,EAAE,CAAW,EAAE,IAAkB;QACnE,MAAM,OAAO,GAAG,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC;QAE9B,GAAG,CAAC,IAAI,GAAG,IAAI,CAAC,KAAK,CAAC,OAAO,CAAC,CAAC;QAE/B,OAAO,IAAI,EAAE,CAAC;IAChB,CAAC;CACF;AARD,kCAQC"}
