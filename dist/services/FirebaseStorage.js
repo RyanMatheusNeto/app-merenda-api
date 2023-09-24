@@ -46,7 +46,12 @@ class FirebaseFileStorage {
     }
     deleteTodaySnackThumb() {
         const refName = (0, moment_1.default)().format("YYYY_MM_DD");
-        return this.delete(refName);
+        try {
+            return this.delete(refName);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 }
 exports.default = FirebaseFileStorage;
