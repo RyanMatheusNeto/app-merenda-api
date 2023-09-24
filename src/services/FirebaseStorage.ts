@@ -52,6 +52,10 @@ export default class FirebaseFileStorage implements FileStorage {
   public deleteTodaySnackThumb() {
     const refName = moment().format("YYYY_MM_DD");
 
-    return this.delete(refName);
+    try {
+      return this.delete(refName);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
