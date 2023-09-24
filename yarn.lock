@@ -1378,10 +1378,10 @@ express-fileupload@^1.4.0:
   dependencies:
     busboy "^1.6.0"
 
-express-generate-swagger@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/express-generate-swagger/-/express-generate-swagger-1.0.2.tgz#67a8ed76868864d5116bf854b13fba0bc3526a44"
-  integrity sha512-3VlrVqEUsVRDmedVxqIGoGewZ1XQ/Wnll5agM+6JoA0Q4dp58YBhJr2rolNDbmStswMtGSGN2BQbBmMqihWTfw==
+express-generate-swagger@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/express-generate-swagger/-/express-generate-swagger-1.0.3.tgz#afa9a10ce0bb77479504e5d2ff4b4628417f0815"
+  integrity sha512-k5QVVi56IM5zlc8qPR5yNA06rvvGWnwEcQTa8y+d8B0rnKgkQvpojtVmW8bwv6RpJqMfpgmmtUnw1aRU5+2N8w==
   dependencies:
     "@types/swagger-ui-express" "^4.1.3"
     express "^4.18.2"
