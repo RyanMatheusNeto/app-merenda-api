@@ -1,10 +1,29 @@
 import moment from "moment";
 import { Snack, SnackModel } from "../models/SnackModel";
+import FirebaseFileStorage from "../services/FirebaseStorage";
+import { FileStorage, UploadFileObject } from "../types/fileStorage";
 
 export class SnackController {
-  async save(snack: Snack) {
+  private _fileStorage: FileStorage;
+
+  constructor() {
+    this._fileStorage = new FirebaseFileStorage();
+  }
+
+  async save(snack: Snack, thumbUpload: UploadFileObject) {
     const snackOfTheDay = await this.findSnackOfTheDay();
+
+    const thumbURL = await this._fileStorage.uploadSnackThumb(thumbUpload);
+
+    snack.thumbURL = thumbURL;
+
+    if (snackOfTheDay && !thumbURL) {
+      await this._fileStorage.deleteTodaySnackThumb();
+    }
+
     if (snackOfTheDay) {
+      const { title, description, thumbURL } = snack;
+
       const updatedSnack = await SnackModel.findOneAndReplace(
         {
           _id: snackOfTheDay._id,
@@ -16,7 +35,14 @@ export class SnackController {
         }
       );
 
-      return updatedSnack;
+      updatedSnack.thumbURL = thumbURL;
+
+      return {
+        ...snackOfTheDay.toJSON(),
+        title,
+        description,
+        thumbURL,
+      };
     }
 
     const savedSnack = await SnackModel.create(snack);

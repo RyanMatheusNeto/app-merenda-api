@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import {LoginMessages} from "../types/login"
 import { User, UserModel } from "../models/UserModel";
+import { LoginMessages } from "../types/login";
 import {
   createUserObject,
   generateJWT,
+  getTokenFromRequest,
   isPasswordValid,
   isTokenValid,
 } from "../utils/security";
-
 
 export default class LoginController {
   async registerUsuario(login: string, name: string, password: string) {
@@ -47,9 +47,7 @@ export default class LoginController {
   }
 
   verifyToken(req: Request, res: Response, next: NextFunction) {
-    // TODO: Get token user from request header
-    const token = "";
-    console.log(token);
+    const token = getTokenFromRequest(req.headers.authorization);
 
     if (isTokenValid(token)) {
       console.log("Vai para a home");
@@ -61,8 +59,7 @@ export default class LoginController {
   }
 
   verifyUserLoggedIn(req: Request, res: Response, next: NextFunction) {
-    // TODO: Get token user from request header
-    const token = "";
+    const token = getTokenFromRequest(req.headers.authorization);
     console.log(token);
 
     if (isTokenValid(token)) {
