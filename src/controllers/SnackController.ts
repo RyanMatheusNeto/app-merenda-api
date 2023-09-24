@@ -17,7 +17,13 @@ export class SnackController {
 
     snack.thumbURL = thumbURL;
 
+    if (snackOfTheDay && !thumbURL) {
+      await this._fileStorage.deleteTodaySnackThumb();
+    }
+
     if (snackOfTheDay) {
+      const { title, description, thumbURL } = snack;
+
       const updatedSnack = await SnackModel.findOneAndReplace(
         {
           _id: snackOfTheDay._id,
@@ -31,7 +37,12 @@ export class SnackController {
 
       updatedSnack.thumbURL = thumbURL;
 
-      return updatedSnack;
+      return {
+        ...snackOfTheDay.toJSON(),
+        title,
+        description,
+        thumbURL,
+      };
     }
 
     const savedSnack = await SnackModel.create(snack);

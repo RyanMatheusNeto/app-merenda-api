@@ -48,7 +48,6 @@ export default class LoginController {
 
   verifyToken(req: Request, res: Response, next: NextFunction) {
     const token = getTokenFromRequest(req.headers.authorization);
-    console.log(token);
 
     if (isTokenValid(token)) {
       console.log("Vai para a home");

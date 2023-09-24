@@ -1,5 +1,11 @@
 import { UploadedFile } from "express-fileupload";
-import { FirebaseStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  FirebaseStorage,
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import moment from "moment";
 import { storage } from "../config/firebase";
 import { FileStorage, UploadFileObject } from "../types/fileStorage";
@@ -22,14 +28,12 @@ export default class FirebaseFileStorage implements FileStorage {
       contentType: file.mimetype,
     };
 
-    const result = await uploadBytes(storageRef, fileContent, metadata);
+    await uploadBytes(storageRef, fileContent, metadata);
 
-    return result.ref.fullPath;
+    return getDownloadURL(storageRef);
   }
 
-  public async uploadSnackThumb(
-    file: UploadFileObject
-  ): Promise<string | null> {
+  public uploadSnackThumb(file: UploadFileObject): Promise<string | null> {
     if (!file) {
       return undefined;
     }
@@ -37,5 +41,17 @@ export default class FirebaseFileStorage implements FileStorage {
     const refName = moment().format("YYYY_MM_DD");
 
     return this.upload(file, refName);
+  }
+
+  public delete(refName: string) {
+    const refStorage = this._getRefFile(refName);
+
+    return deleteObject(refStorage);
+  }
+
+  public deleteTodaySnackThumb() {
+    const refName = moment().format("YYYY_MM_DD");
+
+    return this.delete(refName);
   }
 }
