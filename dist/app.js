@@ -8,6 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const morgan_1 = __importDefault(require("morgan"));
+const express_generate_swagger_1 = require("express-generate-swagger");
 const db_1 = require("./config/db");
 const api_1 = require("./routes/api");
 const snacks_1 = require("./routes/snacks");
@@ -19,5 +20,12 @@ exports.app.use((0, express_fileupload_1.default)());
 exports.app.use(express_1.default.json());
 exports.app.use("/snacks", snacks_1.snacksRouter);
 exports.app.use("/api", api_1.apiRouter);
+(0, express_generate_swagger_1.generateDocSwagger)(exports.app, {
+    info: {
+        title: "App Merenda API",
+        version: "0.0.1",
+        description: "Serviços disponíveis na api do app merenda",
+    },
+});
 exports.app.use("/", (req, res) => res.send("API Merenda"));
 //# sourceMappingURL=app.js.map
