@@ -2,16 +2,18 @@ import { Router } from "express";
 import { UploadedFile } from "express-fileupload";
 import moment from "moment";
 
-import { SnackController } from "../controllers/SnackController";
-import { SnackModel, validateSnackInputs } from "../models/SnackModel";
-import LoginController from "../controllers/LoginController";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "../config/firebase";
-import { sendPushNotificationToAll } from "../messages/PushNotificationMessages";
+import LoginController from "../controllers/LoginController";
+import { SnackController } from "../controllers/SnackController";
+import SnackMiddleware from "../middlewares/SnackMiddleware";
+import { SnackModel, validateSnackInputs } from "../models/SnackModel";
+import { UploadFileObject } from "../types/fileStorage";
 
 export const snacksRouter = Router();
 const snackCtrl = new SnackController();
 const loginCtrl = new LoginController();
+const snackMiddleware = new SnackMiddleware();
 
 const PER_PAGE = 9;
 
@@ -38,29 +40,29 @@ snacksRouter.post("/files", (req, res) => {
   return res.json("deu certo");
 });
 
-snacksRouter.post("/snack", loginCtrl.verifyToken, async (req, res) => {
-  const errorMessages = validateSnackInputs(req.body);
+snacksRouter.post(
+  "/new-snack",
+  loginCtrl.verifyToken,
+  snackMiddleware.getBodyFromFileUploader,
+  async (req, res) => {
+    const errorMessages = validateSnackInputs(req.body);
+    const thumbUpload = req.files ? req.files["thumb"] as UploadFileObject : null;
 
-  if (errorMessages.length === 0) {
-    const { title, description } = req.body;
-    const snack = new SnackModel({ title, description });
-    try {
-      const refName = moment(snack.offerDate).format("YYYY_MM_DD");
-      console.log(`Trying to retrieve thumb from ${refName}`);
-      const snackURL = await getDownloadURL(ref(storage, refName));
-      snack.thumbURL = snackURL;
-    } catch (err) {}
-    await snackCtrl.save(snack);
+    if (errorMessages.length === 0) {
+      const { title, description } = req.body;
+      const snack = new SnackModel({ title, description });
+      const savedSnack = await snackCtrl.save(snack, thumbUpload);
 
-    // sendPushNotificationToAll("Eba! Saiu o cardápio de hoje!", description);
+      // sendPushNotificationToAll("Eba! Saiu o cardápio de hoje!", description);
 
-    return res.render("new_snack", {
-      successMessage: "Merenda do dia salva!",
-    });
+      return res.status(200).json({
+        snack: savedSnack,
+      });
+    }
+
+    return res.render("new_snack", { errorMessages });
   }
-
-  return res.render("new_snack", { errorMessages });
-});
+);
 
 // snacksRouter.get('/new_snack', loginCtrl.verifyToken, (req, res) =>
 //   res.render('new_snack')

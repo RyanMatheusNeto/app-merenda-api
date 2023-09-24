@@ -1,9 +1,22 @@
 import moment from "moment";
 import { Snack, SnackModel } from "../models/SnackModel";
+import FirebaseFileStorage from "../services/FirebaseStorage";
+import { FileStorage, UploadFileObject } from "../types/fileStorage";
 
 export class SnackController {
-  async save(snack: Snack) {
+  private _fileStorage: FileStorage;
+
+  constructor() {
+    this._fileStorage = new FirebaseFileStorage();
+  }
+
+  async save(snack: Snack, thumbUpload: UploadFileObject) {
     const snackOfTheDay = await this.findSnackOfTheDay();
+
+    const thumbURL = await this._fileStorage.uploadSnackThumb(thumbUpload);
+
+    snack.thumbURL = thumbURL;
+
     if (snackOfTheDay) {
       const updatedSnack = await SnackModel.findOneAndReplace(
         {
@@ -15,6 +28,8 @@ export class SnackController {
           thumbURL: snack.thumbURL,
         }
       );
+
+      updatedSnack.thumbURL = thumbURL;
 
       return updatedSnack;
     }
