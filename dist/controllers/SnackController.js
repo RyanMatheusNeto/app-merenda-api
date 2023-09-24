@@ -23,13 +23,13 @@ class SnackController {
     save(snack, thumbUpload) {
         return __awaiter(this, void 0, void 0, function* () {
             const snackOfTheDay = yield this.findSnackOfTheDay();
-            const thumbURL = yield this._fileStorage.uploadSnackThumb(thumbUpload);
-            snack.thumbURL = thumbURL;
-            if (snackOfTheDay && !thumbURL) {
+            const uploadedThumbURL = yield this._fileStorage.uploadSnackThumb(thumbUpload);
+            snack.thumbURL = uploadedThumbURL;
+            if (snackOfTheDay && !uploadedThumbURL && snackOfTheDay.thumbURL) {
                 yield this._fileStorage.deleteTodaySnackThumb();
             }
             if (snackOfTheDay) {
-                const { title, description, thumbURL } = snack;
+                const { title, description, thumbURL: uploadedThumbURL } = snack;
                 const updatedSnack = yield SnackModel_1.SnackModel.findOneAndReplace({
                     _id: snackOfTheDay._id,
                 }, {
@@ -37,10 +37,9 @@ class SnackController {
                     description: snack.description,
                     thumbURL: snack.thumbURL,
                 });
-                updatedSnack.thumbURL = thumbURL;
+                updatedSnack.thumbURL = uploadedThumbURL;
                 return Object.assign(Object.assign({}, snackOfTheDay.toJSON()), { title,
-                    description,
-                    thumbURL });
+                    description, thumbURL: uploadedThumbURL });
             }
             const savedSnack = yield SnackModel_1.SnackModel.create(snack);
             return savedSnack;
