@@ -7,19 +7,7 @@
       "config": { "includeFiles": ["dist/**"] }
     }
   ],
-  "functions": {
-    "api/*": {
-      "rewrites": {
-        "/doc(.*)": "/doc$1"
-      }
-    }
-  },
   "routes": [
-    { "handle": "filesystem" },
-    {
-      "src": "/doc/(.*)",
-      "dest": "/doc"
-    },
     {
       "src": "/(.*)",
       "dest": "dist/index.js"
