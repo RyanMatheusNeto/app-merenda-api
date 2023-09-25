@@ -20,6 +20,7 @@ exports.app.use((0, express_fileupload_1.default)());
 exports.app.use(express_1.default.json());
 exports.app.use("/snacks", snacks_1.snacksRouter);
 exports.app.use("/api", api_1.apiRouter);
+exports.app.use("/doc", express_1.default.static("public"));
 (0, express_generate_swagger_1.generateDocSwagger)(exports.app, {
     info: {
         title: "App Merenda API",
