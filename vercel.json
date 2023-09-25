@@ -4,17 +4,13 @@
     {
       "src": "dist/index.js",
       "use": "@vercel/node",
-      "config": { "includeFiles": ["dist/**", "doc/**"] }
+      "config": { "includeFiles": ["dist/**"] }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "dist/index.js"
-    },
-    {
-      "src": "/doc/(.*)",
-      "dest": "/doc/$1"
     }
   ]
 }
