@@ -19,8 +19,6 @@ app.use(express.json());
 app.use("/snacks", snacksRouter);
 app.use("/api", apiRouter);
 
-app.use("/doc", express.static("public"));
-
 generateDocSwagger(app, {
   info: {
     title: "App Merenda API",
