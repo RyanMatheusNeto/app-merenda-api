@@ -5,6 +5,7 @@ import { SnackController } from "../controllers/SnackController";
 import SnackMiddleware from "../middlewares/SnackMiddleware";
 import { SnackModel, validateSnackInputs } from "../models/SnackModel";
 import { UploadFileObject } from "../types/fileStorage";
+import { ReviewSnackModel } from "../models/ReviewSnack";
 
 export const snacksRouter = Router();
 const snackCtrl = new SnackController();
@@ -37,7 +38,35 @@ snacksRouter.post(
 
     return res.render("new_snack", { errorMessages });
   }
+
+  
 );
+//verifica pela rota se o estudante ja avaliou
+snacksRouter.get("/snack/:id/review/:email", async (req, res) => {
+  const { id, email } = req.params;
+  
+  const review = ReviewSnackModel.findOne({ id, email });
+  const alreadyEvaluated = review !== null;
+  
+    return res.status(200).json({alreadyEvaluated})
+  
+  
+    // pegar id e email, pesquisar no banco (reviewSnack) e verificar se ja existe.
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
 // snacksRouter.get('/new_snack', loginCtrl.verifyToken, (req, res) =>
 //   res.render('new_snack')
