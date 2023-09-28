@@ -55,7 +55,7 @@ snacksRouter.get("/snack/:id/review/:email", async (req, res) => {
   const id = req.params.id;
   console.log(id);
   const email = req.params.email;
-  console.log(email);
+  console.log(email); 
 
   return res.json("teste");
   // pegar id e email, pesquisar no banco (reviewSnack) e verificar se ja existe.
