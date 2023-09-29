@@ -2,11 +2,11 @@ import { ServiceAccount, cert, initializeApp } from "firebase-admin/app";
 import { getMessaging } from "firebase-admin/messaging";
 
 import { UserTokenController } from "../controllers/UserTokenController";
-import serviceAccount from "../keys/ai-que-fome-c79bd-firebase-adminsdk-5lhlt-f477123b6a - Copia.json";
+//import serviceAccount from "../keys/ai-que-fome-c79bd-firebase-adminsdk-5lhlt-f477123b6a - Copia.json";
 import { UserToken } from "../models/UserToken";
 
 const app = initializeApp({
-  credential: cert(serviceAccount as ServiceAccount),
+ // credential: cert(serviceAccount as ServiceAccount),
 });
 
 export const sendPushNotificationToAll = async (
