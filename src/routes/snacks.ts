@@ -50,16 +50,18 @@ snacksRouter.post("/new_snack", loginCtrl.verifyToken, async (req, res) => {
 
   return res.render("new_snack", { errorMessages });
 });
-
+//verifica pela rota se o estudante ja avaliou
 snacksRouter.get("/snack/:id/review/:email", async (req, res) => {
-  const id = req.params.id;
-  console.log(id);
-  const email = req.params.email;
-  console.log(email);
-
-  return res.json("teste");
-  // pegar id e email, pesquisar no banco (reviewSnack) e verificar se ja existe.
-});
+  const { id, email } = req.params;
+  
+  const review = ReviewSnackModel.findOne({ id, email });
+  const alreadyEvaluated = review !== null;
+  
+    return res.status(200).json({alreadyEvaluated})
+  
+  
+    // pegar id e email, pesquisar no banco (reviewSnack) e verificar se ja existe.
+  });
 
 // snacksRouter.get('/new_snack', loginCtrl.verifyToken, (req, res) =>
 //   res.render('new_snack')
